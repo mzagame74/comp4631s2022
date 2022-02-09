@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.237" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable/ic_baseline_pie_chart_24.xml" value="0.237" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable/ic_baseline_trending_up_24.xml" value="0.2385" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.237" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable/ic_launcher_background.xml" value="0.237" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/activity_main.xml" value="0.19519927536231885" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/fragment_home.xml" value="0.14617486338797814" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/fragment_portfolio.xml" value="0.19519927536231885" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/fragment_stocks.xml" value="0.19519927536231885" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
       </map>

@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_stocks">Stocks</string>
     <string name="title_portfolio">Portfolio</string>
+    <string name="header_balance">Your balance</string>
+    <string name="header_watchlist">Watchlist</string>
+    <string name="string_balance">$-.--</string>
 </resources>
