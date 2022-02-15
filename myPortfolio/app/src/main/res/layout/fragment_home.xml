@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/header_balance"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/string_balance"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
@@ -35,19 +35,15 @@
         android:text="@string/string_balance"
         android:textAlignment="textStart"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/web_balance_graph"
+        app:layout_constraintBottom_toTopOf="@+id/graph_balance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_balance" />
 
-    <WebView
-        android:id="@+id/web_balance_graph"
-        android:layout_width="match_parent"
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph_balance"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/header_watchlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +51,7 @@
 
     <TextView
         android:id="@+id/header_watchlist"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
@@ -67,11 +63,11 @@
         app:layout_constraintBottom_toTopOf="@+id/recycler_watchlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/web_balance_graph" />
+        app:layout_constraintTop_toBottomOf="@+id/graph_balance" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_watchlist"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
