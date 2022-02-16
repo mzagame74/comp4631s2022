@@ -4,16 +4,25 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 public class HomeViewModel extends ViewModel {
 
-    //private final MutableLiveData<String> mText;
+    private final MutableLiveData<LineGraphSeries<DataPoint>> balanceData;
 
     public HomeViewModel() {
-        /*mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");*/
+        balanceData = new MutableLiveData<>();
+
+        // set up balance graph with dummy data
+        balanceData.setValue(new LineGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, 1),
+                new DataPoint(2, 3),
+                new DataPoint(5, 7),
+        }));
     }
 
-    /*public LiveData<String> getText() {
-        return mText;
-    }*/
+    public LiveData<LineGraphSeries<DataPoint>> getBalanceData() {
+        return balanceData;
+    }
 }

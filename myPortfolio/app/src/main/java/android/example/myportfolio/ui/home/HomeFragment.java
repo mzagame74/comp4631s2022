@@ -9,8 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.example.myportfolio.databinding.FragmentHomeBinding;
+
+import com.jjoe64.graphview.GraphView;
 
 public class HomeFragment extends Fragment {
 
@@ -24,8 +27,16 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /*final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+        // set up balance graph view
+        final GraphView balanceGraph = binding.graphBalance;
+        balanceGraph.setTitle("Balance");
+        balanceGraph.setTitleTextSize(0);
+        homeViewModel.getBalanceData().observe(getViewLifecycleOwner(),
+                balanceGraph::addSeries);
+
+        // TODO: set up watchlist recycler view
+        final RecyclerView watchlistRecycler = binding.recyclerWatchlist;
+
         return root;
     }
 
