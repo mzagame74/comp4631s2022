@@ -21,6 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--TODO: TradingView charts activity manifest-->
+        <!--<activity
+            android:name=".TradingViewCharts"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+            <intent-filter>
+            </intent-filter>
+        </activity>-->
     </application>
 
 </manifest>
