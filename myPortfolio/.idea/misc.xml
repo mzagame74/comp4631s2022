@@ -9,12 +9,17 @@
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.237" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/drawable/ic_launcher_background.xml" value="0.237" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/activity_main.xml" value="0.19519927536231885" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/balance_header.xml" value="0.190625" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/fragment_home.xml" value="0.14617486338797814" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/fragment_portfolio.xml" value="0.19519927536231885" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/fragment_stocks.xml" value="0.19519927536231885" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/graph_balance.xml" value="0.190625" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/header_balance.xml" value="0.190625" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/recyclerview_balance.xml" value="0.190625" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/recyclerview_watchlist.xml" value="0.190625" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/row_stock.xml" value="0.1" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/stock_row.xml" value="0.190625" />
+        <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/layout/watchlist_stocks.xml" value="0.1" />
         <entry key="..\:/comp4631s2022/myPortfolio/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
       </map>
     </option>

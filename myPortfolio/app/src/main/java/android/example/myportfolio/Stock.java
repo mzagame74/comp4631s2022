@@ -2,50 +2,66 @@ package android.example.myportfolio;
 
 import androidx.annotation.NonNull;
 
+import com.jjoe64.graphview.series.DataPoint;
+
 public class Stock {
-    private String name;
+    private String symbol;
     private double price;
-    private double change_24h;
+    private double change24h;
+    private DataPoint[] graphData;
 
     public Stock() {
-        name = "ABC";
+        symbol = "undefined";
         price = 0;
-        change_24h = 0;
+        change24h = 0;
+        graphData = null;
     }
 
-    public Stock(String name, double price, double change_24h) {
-        this.name = name;
+    public Stock(String symbol, double price, double change24h,
+                 DataPoint[] graphData) {
+        this.symbol = symbol;
         this.price = price;
-        this.change_24h = change_24h;
+        this.change24h = change24h;
+        this.graphData = graphData;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public double getChange_24h() {
-        return change_24h;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setChange_24h(double change_24h) {
-        this.change_24h = change_24h;
+    public double getChange24h() {
+        return change24h;
+    }
+
+    public void setChange24h(double change24h) {
+        this.change24h = change24h;
+    }
+
+    public DataPoint[] getGraphData() {
+        return graphData;
+    }
+
+    public void setGraphData(DataPoint[] graphData) {
+        this.graphData = graphData;
     }
 
     @NonNull
     public String toString() {
-        return name + " is trading at $" + price + " with a 24 hour change of" +
-                " %" + change_24h;
+        if (change24h < 0) {
+            return symbol + " is currently trading at $" + price + " down " + change24h + "% over 24 hours";
+        }
+        return symbol + " is currently trading at $" + price + " up " + change24h + "% over 24 hours";
     }
 }
