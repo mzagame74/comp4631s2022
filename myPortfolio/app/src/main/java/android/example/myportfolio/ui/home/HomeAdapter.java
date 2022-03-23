@@ -6,7 +6,6 @@ import android.example.myportfolio.Stock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,9 +55,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class WatchlistViewHolder extends RecyclerView.ViewHolder {
+        private TextView headerText;
 
         public WatchlistViewHolder(@NonNull View itemView) {
             super(itemView);
+            headerText = itemView.findViewById(R.id.header_text);
+        }
+
+        public void setHeaderText(String text) {
+            headerText.setText(text);
         }
     }
 
@@ -114,7 +119,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return new BalanceGraphViewHolder(balanceGraphLayout);
             case ItemView.WatchlistView:
                 View watchlistLayout =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.watchlist_stocks, parent, false);
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text, parent, false);
                 return new WatchlistViewHolder(watchlistLayout);
             case ItemView.StockView:
                 View stockView =
@@ -139,6 +144,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case ItemView.WatchlistView:
                 // update watchlist view
+                ((WatchlistViewHolder) holder).setHeaderText("Watchlist");
                 //((WatchlistViewHolder) holder).setWatchlist(viewList.get
                 // (position).getWatchlist());
                 break;
