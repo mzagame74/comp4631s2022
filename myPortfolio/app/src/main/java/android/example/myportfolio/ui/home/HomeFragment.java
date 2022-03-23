@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
         homeRecycler.setAdapter(homeAdapter);
 
         // add stocks
-        watchlist.add(new Stock("ABC", 1.23, -4.20, new DataPoint[]{
+        watchlist.add(new Stock("ABC", 4.04, -3.50, new DataPoint[]{
                 new DataPoint(0, 5),
                 new DataPoint(1, 6),
                 new DataPoint(2, 5),
@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
                 new DataPoint(3, 15)
         }));
 
-        // add views and set adapter
+        // add views to view list
         viewList.add(new ItemView(ItemView.BalanceView, 5.89));
         viewList.add(new ItemView(ItemView.BalanceGraphView, new DataPoint[]{
                 new DataPoint(0, 1),
@@ -63,8 +63,8 @@ public class HomeFragment extends Fragment {
         }));
         viewList.add(new ItemView(ItemView.WatchlistView, watchlist));
 
-        for (int i = 0; i < watchlist.size(); ++i) {
-            viewList.add(new ItemView(ItemView.StockView, watchlist.get(i)));
+        for (Stock stock : watchlist) {
+            viewList.add(new ItemView(ItemView.StockView, stock));
         }
 
         return root;

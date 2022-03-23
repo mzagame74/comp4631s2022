@@ -1,5 +1,6 @@
 package android.example.myportfolio.ui.home;
 
+import android.example.myportfolio.ItemAdapter;
 import android.example.myportfolio.ItemView;
 import android.example.myportfolio.R;
 import android.example.myportfolio.Stock;
@@ -18,8 +19,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ItemView> viewList;
+public class HomeAdapter extends ItemAdapter {
 
     public static class BalanceViewHolder extends RecyclerView.ViewHolder {
         private final TextView balanceString;
@@ -55,10 +55,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class WatchlistViewHolder extends RecyclerView.ViewHolder {
-        private TextView headerText;
+        private final TextView headerText;
 
         public WatchlistViewHolder(@NonNull View itemView) {
             super(itemView);
+            // TODO: create header TextView programmatically and delete
+            //  unnecessary header text layout
             headerText = itemView.findViewById(R.id.header_text);
         }
 
@@ -97,12 +99,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public HomeAdapter(List<ItemView> viewList) {
-        this.viewList = viewList;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return viewList.get(position).getViewType();
+        super(viewList);
     }
 
     @NonNull
@@ -130,33 +127,25 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    // TODO: figure out how to dynamically handle live data for recyclerview
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (viewList.get(position).getViewType()) {
+        switch (getViewList().get(position).getViewType()) {
             case ItemView.BalanceView:
                 // update balance string
-                ((BalanceViewHolder) holder).setBalance(viewList.get(position).getBalance());
+                ((BalanceViewHolder) holder).setBalance(getViewList().get(position).getBalance());
                 break;
             case ItemView.BalanceGraphView:
                 // update balance graph data
-                ((BalanceGraphViewHolder) holder).setBalanceData(viewList.get(position).getBalanceData());
+                ((BalanceGraphViewHolder) holder).setBalanceData(getViewList().get(position).getBalanceData());
                 break;
             case ItemView.WatchlistView:
                 // update watchlist view
                 ((WatchlistViewHolder) holder).setHeaderText("Watchlist");
-                //((WatchlistViewHolder) holder).setWatchlist(viewList.get
-                // (position).getWatchlist());
                 break;
             case ItemView.StockView:
                 // update stock information
-                ((StockViewHolder) holder).setStockInfo(viewList.get(position).getStock());
+                ((StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
             default:
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return viewList.size();
     }
 }
