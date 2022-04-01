@@ -54,17 +54,21 @@ public class HomeFragment extends Fragment {
         }));
 
         // add views to view list
-        viewList.add(new ItemView(ItemView.BalanceView, 5.89));
-        viewList.add(new ItemView(ItemView.BalanceGraphView, new DataPoint[]{
-                new DataPoint(0, 1),
-                new DataPoint(1, 3),
-                new DataPoint(2, 7),
-                new DataPoint(3, 11)
-        }));
-        viewList.add(new ItemView(ItemView.WatchlistView, watchlist));
+        try {
+            viewList.add(new ItemView(ItemView.BalanceView, 5.89));
+            viewList.add(new ItemView(ItemView.BalanceGraphView, new DataPoint[]{
+                    new DataPoint(0, 1),
+                    new DataPoint(1, 3),
+                    new DataPoint(2, 7),
+                    new DataPoint(3, 11)
+            }));
+            viewList.add(new ItemView(ItemView.WatchlistHeaderView));
 
-        for (Stock stock : watchlist) {
-            viewList.add(new ItemView(ItemView.StockView, stock));
+            for (Stock stock : watchlist) {
+                viewList.add(new ItemView(ItemView.StockView, stock));
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
 
         return root;

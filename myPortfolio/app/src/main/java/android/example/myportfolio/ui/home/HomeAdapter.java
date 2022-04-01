@@ -59,8 +59,6 @@ public class HomeAdapter extends ItemAdapter {
 
         public WatchlistViewHolder(@NonNull View itemView) {
             super(itemView);
-            // TODO: create header TextView programmatically and delete
-            //  unnecessary header text layout
             headerText = itemView.findViewById(R.id.header_text);
         }
 
@@ -114,7 +112,7 @@ public class HomeAdapter extends ItemAdapter {
                 View balanceGraphLayout =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.graph_balance, parent, false);
                 return new BalanceGraphViewHolder(balanceGraphLayout);
-            case ItemView.WatchlistView:
+            case ItemView.WatchlistHeaderView:
                 View watchlistLayout =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text, parent, false);
                 return new WatchlistViewHolder(watchlistLayout);
@@ -123,27 +121,24 @@ public class HomeAdapter extends ItemAdapter {
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stock, parent, false);
                 return new StockViewHolder(stockView);
             default:
-                return null;
+                throw new IllegalArgumentException("Cannot create ViewHolder" +
+                        " with invalid view type: " + viewType);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (getViewList().get(position).getViewType()) {
-            case ItemView.BalanceView:
-                // update balance string
+            case ItemView.BalanceView:      // set balance string
                 ((BalanceViewHolder) holder).setBalance(getViewList().get(position).getBalance());
                 break;
-            case ItemView.BalanceGraphView:
-                // update balance graph data
+            case ItemView.BalanceGraphView: // set balance graph data
                 ((BalanceGraphViewHolder) holder).setBalanceData(getViewList().get(position).getBalanceData());
                 break;
-            case ItemView.WatchlistView:
-                // update watchlist view
+            case ItemView.WatchlistHeaderView:    // set watchlist header
                 ((WatchlistViewHolder) holder).setHeaderText("Watchlist");
                 break;
-            case ItemView.StockView:
-                // update stock information
+            case ItemView.StockView:        // set stock information
                 ((StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
             default:
         }
