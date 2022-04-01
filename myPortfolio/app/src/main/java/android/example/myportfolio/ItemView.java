@@ -17,29 +17,44 @@ public class ItemView {
     private List<Stock> watchlist;
     private Stock stock;
 
-    // TODO: handle exception when view type is not within valid range
     // constructor for balance view
-    public ItemView(int viewType, double balance) {
+    public ItemView(int viewType, double balance) throws IllegalArgumentException {
+        if (viewType < 0 || viewType > 3) {
+            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+                    "type: " + viewType);
+        }
         this.viewType = viewType;
         this.balance = balance;
     }
 
     // constructor for balance graph view
-    public ItemView(int viewType, DataPoint[] balanceData) {
+    public ItemView(int viewType, DataPoint[] balanceData) throws IllegalArgumentException {
+        if (viewType < 0 || viewType > 3) {
+            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+                    "type: " + viewType);
+        }
         this.viewType = viewType;
         this.balanceData = balanceData;
     }
 
     // constructor for watchlist view
-    public ItemView(int viewType, List<Stock> watchlist) {
+    public ItemView(int viewType, List<Stock> watchlist) throws IllegalArgumentException {
         this.viewType = viewType;
         this.watchlist = watchlist;
+        if (viewType < 0 || viewType > 3) {
+            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+                    "type: " + viewType);
+        }
     }
 
     // constructor for stock view
-    public ItemView(int viewType, Stock stock) {
+    public ItemView(int viewType, Stock stock) throws IllegalArgumentException {
         this.viewType = viewType;
         this.stock = stock;
+        if (viewType < 0 || viewType > 3) {
+            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+                    "type: " + viewType);
+        }
     }
 
     public int getViewType() {
