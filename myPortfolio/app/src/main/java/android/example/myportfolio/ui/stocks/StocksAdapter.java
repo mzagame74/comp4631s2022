@@ -56,23 +56,20 @@ public class StocksAdapter extends ItemAdapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case ItemView.StockView:
-                View stockView =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stock, parent, false);
-                return new StocksAdapter.StockViewHolder(stockView);
-            default:
-                return null;
+        if (viewType == ItemView.StockView) {
+            View stockView =
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stock, parent, false);
+            return new StockViewHolder(stockView);
         }
+        throw new IllegalArgumentException("Cannot create ViewHolder with " +
+                "invalid view type: " + viewType);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (getViewList().get(position).getViewType()) {
-            case ItemView.StockView:
-                // update stock information
-                ((StocksAdapter.StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
-            default:
+        // set stock information
+        if (getViewList().get(position).getViewType() == ItemView.StockView) {
+            ((StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
         }
     }
 }

@@ -66,8 +66,12 @@ public class StocksFragment extends Fragment {
         }));
 
         // add views to view list
-        for (Stock stock : stocks) {
-            viewList.add(new ItemView(ItemView.StockView, stock));
+        try {
+            for (Stock stock : stocks) {
+                viewList.add(new ItemView(ItemView.StockView, stock));
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
 
         return root;
