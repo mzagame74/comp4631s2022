@@ -1,6 +1,7 @@
 package android.example.myportfolio.ui.stocks;
 
-import android.example.myportfolio.ItemView;
+import android.example.myportfolio.CustomAdapter;
+import android.example.myportfolio.CustomView;
 import android.example.myportfolio.Stock;
 import android.example.myportfolio.databinding.FragmentStocksBinding;
 import android.os.Bundle;
@@ -32,12 +33,12 @@ public class StocksFragment extends Fragment {
 
         // set up recycler view
         RecyclerView stocksRecycler = binding.recyclerStocks;
-        List<ItemView> viewList = new ArrayList<>();
+        List<CustomView> viewList = new ArrayList<>();
         List<Stock> stocks = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        StocksAdapter stocksAdapter = new StocksAdapter(viewList);
+        CustomAdapter customAdapter = new CustomAdapter(viewList);
         stocksRecycler.setLayoutManager(layoutManager);
-        stocksRecycler.setAdapter(stocksAdapter);
+        stocksRecycler.setAdapter(customAdapter);
 
         // add stocks
         stocks.add(new Stock("ABC", 4.04, -3.50, new DataPoint[]{
@@ -68,7 +69,7 @@ public class StocksFragment extends Fragment {
         // add views to view list
         try {
             for (Stock stock : stocks) {
-                viewList.add(new ItemView(ItemView.StockView, stock));
+                viewList.add(new CustomView(CustomView.StockView, stock));
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

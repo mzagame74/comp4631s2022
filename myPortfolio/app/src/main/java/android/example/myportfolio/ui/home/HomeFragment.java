@@ -1,6 +1,7 @@
 package android.example.myportfolio.ui.home;
 
-import android.example.myportfolio.ItemView;
+import android.example.myportfolio.CustomAdapter;
+import android.example.myportfolio.CustomView;
 import android.example.myportfolio.Stock;
 import android.example.myportfolio.databinding.FragmentHomeBinding;
 import android.os.Bundle;
@@ -32,12 +33,12 @@ public class HomeFragment extends Fragment {
 
         // set up recycler view
         RecyclerView homeRecycler = binding.recyclerHome;
-        List<ItemView> viewList = new ArrayList<>();
+        List<CustomView> viewList = new ArrayList<>();
         List<Stock> watchlist = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        HomeAdapter homeAdapter = new HomeAdapter(viewList);
+        CustomAdapter customAdapter = new CustomAdapter(viewList);
         homeRecycler.setLayoutManager(layoutManager);
-        homeRecycler.setAdapter(homeAdapter);
+        homeRecycler.setAdapter(customAdapter);
 
         // add stocks
         watchlist.add(new Stock("ABC", 4.04, -3.50, new DataPoint[]{
@@ -55,17 +56,17 @@ public class HomeFragment extends Fragment {
 
         // add views to view list
         try {
-            viewList.add(new ItemView(ItemView.BalanceView, 5.89));
-            viewList.add(new ItemView(ItemView.BalanceGraphView, new DataPoint[]{
+            viewList.add(new CustomView(CustomView.BalanceView, 5.89));
+            viewList.add(new CustomView(CustomView.BalanceGraphView, new DataPoint[]{
                     new DataPoint(0, 1),
                     new DataPoint(1, 3),
                     new DataPoint(2, 7),
                     new DataPoint(3, 11)
             }));
-            viewList.add(new ItemView(ItemView.WatchlistHeaderView));
+            viewList.add(new CustomView(CustomView.WatchlistHeaderView));
 
             for (Stock stock : watchlist) {
-                viewList.add(new ItemView(ItemView.StockView, stock));
+                viewList.add(new CustomView(CustomView.StockView, stock));
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

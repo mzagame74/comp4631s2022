@@ -1,9 +1,5 @@
-package android.example.myportfolio.ui.home;
+package android.example.myportfolio;
 
-import android.example.myportfolio.ItemAdapter;
-import android.example.myportfolio.ItemView;
-import android.example.myportfolio.R;
-import android.example.myportfolio.Stock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +13,75 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import org.eazegraph.lib.charts.PieChart;
+
 import java.util.List;
 
-public class HomeAdapter extends ItemAdapter {
+public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final List<CustomView> viewList;
+
+    public CustomAdapter(List<CustomView> viewList) {
+        this.viewList = viewList;
+    }
+
+    public List<CustomView> getViewList() {
+        return viewList;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return viewList.get(position).getViewType();
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case CustomView.BalanceView:
+                View balanceLayout =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.header_balance, parent, false);
+                return new BalanceViewHolder(balanceLayout);
+            case CustomView.BalanceGraphView:
+                View balanceGraphLayout =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.graph_balance, parent, false);
+                return new android.example.myportfolio.CustomAdapter.BalanceGraphViewHolder(balanceGraphLayout);
+            case CustomView.WatchlistHeaderView:
+                View watchlistLayout =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text, parent, false);
+                return new android.example.myportfolio.CustomAdapter.WatchlistHeaderViewHolder(watchlistLayout);
+            case CustomView.StockView:
+                View stockView =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stock, parent, false);
+                return new StockViewHolder(stockView);
+            default:
+                throw new IllegalArgumentException("Cannot create ViewHolder" +
+                        " with invalid view type: " + viewType);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        switch (getViewList().get(position).getViewType()) {
+            case CustomView.BalanceView:          // set balance string
+                ((BalanceViewHolder) holder).setBalance(getViewList().get(position).getBalance());
+                break;
+            case CustomView.BalanceGraphView:     // set balance graph data
+                ((android.example.myportfolio.CustomAdapter.BalanceGraphViewHolder) holder).setBalanceData(getViewList().get(position).getBalanceData());
+                break;
+            case CustomView.WatchlistHeaderView:  // set watchlist header
+                ((android.example.myportfolio.CustomAdapter.WatchlistHeaderViewHolder) holder).setHeaderText("Watchlist");
+                break;
+            case CustomView.StockView:            // set stock information
+                ((StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
+            default:
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return viewList.size();
+    }
 
     public static class BalanceViewHolder extends RecyclerView.ViewHolder {
         private final TextView balanceString;
@@ -54,10 +116,10 @@ public class HomeAdapter extends ItemAdapter {
         }
     }
 
-    public static class WatchlistViewHolder extends RecyclerView.ViewHolder {
+    public static class WatchlistHeaderViewHolder extends RecyclerView.ViewHolder {
         private final TextView headerText;
 
-        public WatchlistViewHolder(@NonNull View itemView) {
+        public WatchlistHeaderViewHolder(@NonNull View itemView) {
             super(itemView);
             headerText = itemView.findViewById(R.id.header_text);
         }
@@ -93,54 +155,6 @@ public class HomeAdapter extends ItemAdapter {
             stockChange24h.append("%");
             stockPriceGraph.setTitle(stock.getSymbol());
             stockPriceGraph.addSeries(new LineGraphSeries<>(stock.getGraphData()));
-        }
-    }
-
-    public HomeAdapter(List<ItemView> viewList) {
-        super(viewList);
-    }
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case ItemView.BalanceView:
-                View balanceLayout =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.header_balance, parent, false);
-                return new BalanceViewHolder(balanceLayout);
-            case ItemView.BalanceGraphView:
-                View balanceGraphLayout =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.graph_balance, parent, false);
-                return new BalanceGraphViewHolder(balanceGraphLayout);
-            case ItemView.WatchlistHeaderView:
-                View watchlistLayout =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text, parent, false);
-                return new WatchlistViewHolder(watchlistLayout);
-            case ItemView.StockView:
-                View stockView =
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stock, parent, false);
-                return new StockViewHolder(stockView);
-            default:
-                throw new IllegalArgumentException("Cannot create ViewHolder" +
-                        " with invalid view type: " + viewType);
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (getViewList().get(position).getViewType()) {
-            case ItemView.BalanceView:      // set balance string
-                ((BalanceViewHolder) holder).setBalance(getViewList().get(position).getBalance());
-                break;
-            case ItemView.BalanceGraphView: // set balance graph data
-                ((BalanceGraphViewHolder) holder).setBalanceData(getViewList().get(position).getBalanceData());
-                break;
-            case ItemView.WatchlistHeaderView:    // set watchlist header
-                ((WatchlistViewHolder) holder).setHeaderText("Watchlist");
-                break;
-            case ItemView.StockView:        // set stock information
-                ((StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
-            default:
         }
     }
 }

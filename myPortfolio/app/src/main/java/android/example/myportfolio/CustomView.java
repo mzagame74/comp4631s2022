@@ -2,7 +2,7 @@ package android.example.myportfolio;
 
 import com.jjoe64.graphview.series.DataPoint;
 
-public class ItemView {
+public class CustomView {
     // valid view types
     public static final int BalanceView = 0;
     public static final int BalanceGraphView = 1;
@@ -15,18 +15,18 @@ public class ItemView {
     private Stock stock;
 
     // default constructor
-    public ItemView(int viewType) throws IllegalArgumentException {
+    public CustomView(int viewType) throws IllegalArgumentException {
         this.viewType = viewType;
         if (viewType < 0 || viewType > 3) {
-            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+            throw new IllegalArgumentException("Cannot create CustomView with invalid view " +
                     "type: " + viewType);
         }
     }
 
     // constructor for balance view
-    public ItemView(int viewType, double balance) throws IllegalArgumentException {
+    public CustomView(int viewType, double balance) throws IllegalArgumentException {
         if (viewType < 0 || viewType > 3) {
-            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+            throw new IllegalArgumentException("Cannot create CustomView with invalid view " +
                     "type: " + viewType);
         }
         this.viewType = viewType;
@@ -34,9 +34,9 @@ public class ItemView {
     }
 
     // constructor for balance graph view
-    public ItemView(int viewType, DataPoint[] balanceData) throws IllegalArgumentException {
+    public CustomView(int viewType, DataPoint[] balanceData) throws IllegalArgumentException {
         if (viewType < 0 || viewType > 3) {
-            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+            throw new IllegalArgumentException("Cannot create CustomView with invalid view " +
                     "type: " + viewType);
         }
         this.viewType = viewType;
@@ -44,11 +44,11 @@ public class ItemView {
     }
 
     // constructor for stock view
-    public ItemView(int viewType, Stock stock) throws IllegalArgumentException {
+    public CustomView(int viewType, Stock stock) throws IllegalArgumentException {
         this.viewType = viewType;
         this.stock = stock;
         if (viewType < 0 || viewType > 3) {
-            throw new IllegalArgumentException("Cannot create ItemView with invalid view " +
+            throw new IllegalArgumentException("Cannot create CustomView with invalid view " +
                     "type: " + viewType);
         }
     }
