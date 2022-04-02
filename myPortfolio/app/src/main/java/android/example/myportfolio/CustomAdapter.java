@@ -1,5 +1,6 @@
 package android.example.myportfolio;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -39,21 +42,25 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case CustomView.BalanceView:
-                View balanceLayout =
+                View balanceView =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.header_balance, parent, false);
-                return new BalanceViewHolder(balanceLayout);
+                return new BalanceViewHolder(balanceView);
             case CustomView.BalanceGraphView:
-                View balanceGraphLayout =
+                View balanceGraphView =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.graph_balance, parent, false);
-                return new android.example.myportfolio.CustomAdapter.BalanceGraphViewHolder(balanceGraphLayout);
+                return new BalanceGraphViewHolder(balanceGraphView);
             case CustomView.WatchlistHeaderView:
-                View watchlistLayout =
+                View watchlistHeaderView =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.header_text, parent, false);
-                return new android.example.myportfolio.CustomAdapter.WatchlistHeaderViewHolder(watchlistLayout);
+                return new WatchlistHeaderViewHolder(watchlistHeaderView);
             case CustomView.StockView:
                 View stockView =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.row_stock, parent, false);
                 return new StockViewHolder(stockView);
+            case CustomView.PieChartView:
+                View pieChartView =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.pie_chart_portfolio, parent, false);
+                return new PieChartViewHolder(pieChartView);
             default:
                 throw new IllegalArgumentException("Cannot create ViewHolder" +
                         " with invalid view type: " + viewType);
@@ -67,13 +74,17 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((BalanceViewHolder) holder).setBalance(getViewList().get(position).getBalance());
                 break;
             case CustomView.BalanceGraphView:     // set balance graph data
-                ((android.example.myportfolio.CustomAdapter.BalanceGraphViewHolder) holder).setBalanceData(getViewList().get(position).getBalanceData());
+                ((BalanceGraphViewHolder) holder).setBalanceData(getViewList().get(position).getBalanceData());
                 break;
             case CustomView.WatchlistHeaderView:  // set watchlist header
-                ((android.example.myportfolio.CustomAdapter.WatchlistHeaderViewHolder) holder).setHeaderText("Watchlist");
+                ((WatchlistHeaderViewHolder) holder).setHeaderText("Watchlist");
                 break;
             case CustomView.StockView:            // set stock information
                 ((StockViewHolder) holder).setStockInfo(getViewList().get(position).getStock());
+                break;
+            case CustomView.PieChartView:
+                ((PieChartViewHolder) holder).setChartData(getViewList().get(position).getAssets());
+                break;
             default:
         }
     }
@@ -155,6 +166,71 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             stockChange24h.append("%");
             stockPriceGraph.setTitle(stock.getSymbol());
             stockPriceGraph.addSeries(new LineGraphSeries<>(stock.getGraphData()));
+        }
+    }
+
+    public static class PieChartViewHolder extends RecyclerView.ViewHolder {
+        private final PieChart pieChart;
+
+        public PieChartViewHolder(@NonNull View itemView) {
+            super(itemView);
+            pieChart = itemView.findViewById(R.id.pie_chart_portfolio);
+        }
+
+        public void setChartData(List<Asset> assets) {
+            int numAssets = assets.size();
+
+            // sort assets by value
+            Collections.sort(assets, (a1, a2) -> Double.compare(a2.getValue(), a1.getValue()));
+
+            // add a pie slice for every asset up to 4 assets plus "other(s)"
+            if (numAssets > 0) {
+                pieChart.addPieSlice(new PieModel(assets.get(numAssets - 1).getSymbol(),
+                        (int) getPercentValue(assets.get(numAssets - 1),
+                                assets),
+                        Color.parseColor("#FFFFA726")));
+            }
+            if (numAssets > 1) {
+                pieChart.addPieSlice(new PieModel(assets.get(numAssets - 2).getSymbol(),
+                        (int) getPercentValue(assets.get(numAssets - 2),
+                                assets),
+                        Color.parseColor("#FF66BB6A")));
+            }
+            if (numAssets > 2) {
+                pieChart.addPieSlice(new PieModel(assets.get(numAssets - 3).getSymbol(),
+                        (int) getPercentValue(assets.get(numAssets - 3),
+                                assets),
+                        Color.parseColor("#FFEF5350")));
+            }
+            if (numAssets > 3) {
+                pieChart.addPieSlice(new PieModel(assets.get(numAssets - 4).getSymbol(),
+                        (int) getPercentValue(assets.get(numAssets - 4),
+                                assets),
+                        Color.parseColor("#FF29B6F6")));
+            }
+            if (numAssets > 4) {
+                double mainValue = 0;       // value of largest four assets
+                for (int i = numAssets - 4; i < numAssets; ++i) {
+                    mainValue += assets.get(i).getValue();
+                }
+                pieChart.addPieSlice(new PieModel("Other(s)",
+                        100 - (int) (mainValue / getTotalValue(assets) * 100),
+                        Color.parseColor("#FF78D6D0")));
+            }
+        }
+
+        // get total value of the entire portfolio
+        public double getTotalValue(List<Asset> assets) {
+            double totalValue = 0;
+            for (Asset asset : assets) {
+                totalValue += asset.getValue();
+            }
+            return totalValue;
+        }
+
+        // get an asset's percent of the portfolio based on asset values
+        public double getPercentValue(Asset asset, List<Asset> assets) {
+            return asset.getValue() / getTotalValue(assets) * 100;
         }
     }
 }
