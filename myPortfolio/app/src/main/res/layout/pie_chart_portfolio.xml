@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="fill"
+    android:orientation="vertical">
+
+    <org.eazegraph.lib.charts.PieChart
+        android:id="@+id/pie_chart_portfolio"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:padding="16dp" />
+
+    <LinearLayout
+        android:id="@+id/pie_chart_portfolio_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp" />
+</LinearLayout>
