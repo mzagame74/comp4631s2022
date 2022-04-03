@@ -11,9 +11,8 @@ public class CustomView {
     public static final int WatchlistHeaderView = 2;
     public static final int StockView = 3;
     public static final int PieChartView = 4;
-    public static final int PieChartKeyItemView = 5;
-    public static final int AssetsHeaderView = 6;
-    public static final int AssetView = 7;
+    public static final int AssetsHeaderView = 5;
+    public static final int AssetView = 6;
 
     private int viewType;
     private double balance;
@@ -60,7 +59,7 @@ public class CustomView {
         this.stock = stock;
     }
 
-    // constructor for pie chart view
+    // constructor for pie chart view and pie chart key view
     public CustomView(int viewType, List<Asset> assets) throws IllegalArgumentException {
         if (viewType != PieChartView) {
             throw new IllegalArgumentException("Invalid view type " + viewType +
