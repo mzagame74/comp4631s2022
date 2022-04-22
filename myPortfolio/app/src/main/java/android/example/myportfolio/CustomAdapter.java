@@ -26,9 +26,13 @@ import java.util.Locale;
 public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<CustomView> viewList;
+    private final NumberFormat dollarFormat;
 
     public CustomAdapter(List<CustomView> viewList) {
         this.viewList = viewList;
+        Locale en_us = new Locale("en", "US");
+        dollarFormat =
+                NumberFormat.getCurrencyInstance(en_us);
     }
 
     public List<CustomView> getViewList() {
@@ -68,6 +72,10 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 View assetsHeaderView =
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.header_assets, parent, false);
                 return new AssetsHeaderViewHolder(assetsHeaderView);
+            case CustomView.AssetView:
+                View assetView =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.row_asset, parent, false);
+                return new AssetViewHolder(assetView);
             default:
                 throw new IllegalArgumentException("Cannot create ViewHolder" +
                         " with invalid view type: " + viewType);
@@ -93,6 +101,8 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((PieChartViewHolder) holder).setChartData(getViewList().get(position).getAssets());
                 ((PieChartViewHolder) holder).setPieChartKey();
                 break;
+            case CustomView.AssetView:
+                ((AssetViewHolder) holder).setAssetInfo(getViewList().get(position).getAsset());
             default:
         }
     }
@@ -102,7 +112,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return viewList.size();
     }
 
-    public static class BalanceViewHolder extends RecyclerView.ViewHolder {
+    public class BalanceViewHolder extends RecyclerView.ViewHolder {
         private final TextView balanceString;
 
         public BalanceViewHolder(@NonNull View itemView) {
@@ -111,9 +121,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         public void setBalance(double balance) {
-            Locale en_us = new Locale("en", "US");
-            NumberFormat dollarFormat =
-                    NumberFormat.getCurrencyInstance(en_us);
             balanceString.setText(dollarFormat.format(balance));
         }
     }
@@ -150,7 +157,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public static class StockViewHolder extends RecyclerView.ViewHolder {
+    public class StockViewHolder extends RecyclerView.ViewHolder {
         private final TextView stockSymbol;
         private final TextView stockPrice;
         private final TextView stockChange24h;
@@ -170,8 +177,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public void setStockInfo(Stock stock) {
             stockSymbol.setText(stock.getSymbol());
-            stockPrice.setText("$");
-            stockPrice.append(String.valueOf(stock.getPrice()));
+            stockPrice.setText(dollarFormat.format(stock.getPrice()));
             stockChange24h.setText(String.valueOf(stock.getChange24h()));
             stockChange24h.append("%");
             stockPriceGraph.setTitle(stock.getSymbol());
@@ -281,6 +287,33 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public AssetsHeaderViewHolder(@NonNull View itemView) {
             super(itemView);
+        }
+    }
+
+    public class AssetViewHolder extends RecyclerView.ViewHolder {
+        private final TextView assetSymbol;
+        private final TextView assetPrice;
+        private final TextView assetChange24h;
+        private final TextView assetHoldings;
+        private final TextView assetHoldingsValue;
+
+        public AssetViewHolder(@NonNull View itemView) {
+            super(itemView);
+            assetSymbol = itemView.findViewById(R.id.asset_symbol);
+            assetPrice = itemView.findViewById(R.id.asset_price);
+            assetChange24h = itemView.findViewById(R.id.asset_change_24h);
+            assetHoldings = itemView.findViewById(R.id.asset_holdings);
+            assetHoldingsValue =
+                    itemView.findViewById(R.id.asset_holdings_value);
+        }
+
+        public void setAssetInfo(Asset asset) {
+            assetSymbol.setText(asset.getSymbol());
+            assetPrice.setText(dollarFormat.format(asset.getPrice()));
+            assetChange24h.setText("0.0");
+            assetChange24h.append("%");
+            assetHoldings.setText(String.valueOf(asset.getHoldings()));
+            assetHoldingsValue.setText(dollarFormat.format(asset.getValue()));
         }
     }
 }

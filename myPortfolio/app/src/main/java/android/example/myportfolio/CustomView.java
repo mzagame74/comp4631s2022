@@ -19,6 +19,7 @@ public class CustomView {
     private DataPoint[] balanceData;
     private Stock stock;
     private List<Asset> assets;
+    private Asset asset;
 
     // default constructor
     public CustomView(int viewType) throws IllegalArgumentException {
@@ -69,6 +70,16 @@ public class CustomView {
         this.assets = assets;
     }
 
+    // constructor for asset view
+    public CustomView(int viewType, Asset asset) throws IllegalArgumentException {
+        if (viewType != AssetView) {
+            throw new IllegalArgumentException("Invalid view type " + viewType +
+                    " for AssetView");
+        }
+        this.viewType = viewType;
+        this.asset = asset;
+    }
+
     public int getViewType() {
         return viewType;
     }
@@ -107,5 +118,13 @@ public class CustomView {
 
     public void setAssets(List<Asset> assets) {
         this.assets = assets;
+    }
+
+    public Asset getAsset() {
+        return asset;
+    }
+
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 }

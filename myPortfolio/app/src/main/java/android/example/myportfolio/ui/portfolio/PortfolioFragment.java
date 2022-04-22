@@ -59,6 +59,9 @@ public class PortfolioFragment extends Fragment {
             viewList.add(new CustomView(CustomView.BalanceView, balance));
             viewList.add(new CustomView(CustomView.PieChartView, assets));
             viewList.add(new CustomView(CustomView.AssetsHeaderView));
+            for (Asset asset: assets) {
+                viewList.add(new CustomView(CustomView.AssetView, asset));
+            }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
